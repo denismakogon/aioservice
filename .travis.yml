@@ -6,16 +6,16 @@ python:
   - 3.5
 
 env:
-  - TOX="py35"
-  - TOX="pep8"
-  - TOX="docs"
+  - TOX_ENV="py35"
+  - TOX_ENV="pep8"
+  - TOX_ENV="docs"
 
 install:
   - pip install tox==2.5.0
   - pip install codecov
 
 script:
-  - tox
+  - tox -e $TOX_ENV
 
 after_success:
   - codecov
