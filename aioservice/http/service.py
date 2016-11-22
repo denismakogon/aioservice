@@ -86,6 +86,8 @@ class HTTPService(object):
             self.logger = log.UnifiedLogger(
                 log_to_console=True,
                 level="INFO").setup_logger(__package__)
+        else:
+            self.logger = logger
 
         self.root = web.Application(
             logger=self.logger,
@@ -117,7 +119,8 @@ class HTTPService(object):
         except (Exception, ImportError) as ex:
             self.logger.error("Unable to apply swagger. Reason: "
                               "'{}'".format(str(ex)))
-            pass
+        finally:
+            return self
 
     def initialize(self):
         web.run_app(self.root, host=self.host, port=self.port,
