@@ -1,3 +1,5 @@
+[![Documentation Status](https://readthedocs.org/projects/aioservice/badge/?version=latest)](http://aioservice.readthedocs.io/en/latest/?badge=latest)
+
 AIOService
 ==========
 
