@@ -5,6 +5,7 @@ Run tests on target brunch
 --------------------------
     tox -epep8
     tox -epy35
+    tox -edocs
 
 
 Declare package version
@@ -25,7 +26,7 @@ Create GitHub tag
 -----------------
 
     Releases ---> Draft New Release
-    Name: Functions Python API version X.X.X stable release
+    Name: AIOService version X.X.X stable release
 
 
 Collect changes from previous version
@@ -45,7 +46,7 @@ Check install capability for the wheel
 
     virtualenv .test_venv
     source .test_venv/bin/activate
-    pip install dist/functionsclient-X.X.X-py2.py3-none-any.whl
+    pip install dist/aioservice-X.X.X-py2.py3-none-any.whl
 
 
 Submit release to PYPI
