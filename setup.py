@@ -24,7 +24,7 @@ setuptools.setup(
     version='0.0.1',
     description='Library to provide HTTP advanced service building',
     long_description=read('README.md'),
-    url='aioservice.readthedocs.org',
+    url='https://aioservice.readthedocs.org',
     author='Denis Makogon',
     author_email='lildee1991@gmail.com',
     packages=setuptools.find_packages(),
