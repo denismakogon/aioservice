@@ -100,7 +100,6 @@ class HTTPService(object):
 
     def apply_swagger(self,
                       swagger_url: str = "/api/doc",
-                      api_base_url: str = "/",
                       description: str = "Swagger API definition",
                       api_version: str = "1.0.0",
                       title: str = "Swagger API",
@@ -110,7 +109,6 @@ class HTTPService(object):
             aiohttp_swagger.setup_swagger(
                 self.root,
                 swagger_url=swagger_url,
-                api_base_url=api_base_url,
                 description=description,
                 api_version=api_version,
                 title=title,

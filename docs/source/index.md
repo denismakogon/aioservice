@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    overview.md
+   HOW-TO.md
 
 
 

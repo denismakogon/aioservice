@@ -12,8 +12,9 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import asyncio
 import functools
+
+from aiohttp import web
 
 
 def api_action(**unscoped_kwargs):
@@ -39,7 +40,14 @@ def api_action(**unscoped_kwargs):
 
         @functools.wraps(func)
         async def wrapper(self, *args, **kwargs):
-            return await func(self, *args, *kwargs)
+            try:
+                return await func(self, *args, *kwargs)
+            except Exception as ex:
+                return web.json_response(data={
+                    "error": {
+                        "message": getattr(ex, "reason", str(ex))
+                    }
+                }, status=getattr(ex, "status", 500))
 
         for key, value in unscoped_kwargs.items():
             setattr(wrapper, 'arg_{}'.format(key), value)
