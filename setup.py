@@ -57,10 +57,4 @@ setuptools.setup(
         "pytest-cov",
     ],
     zip_safe=True,
-    entry_points={
-        'console_scripts': [
-            'laos-api = laos.service.laos_api:server',
-        ]
-    },
-
 )
