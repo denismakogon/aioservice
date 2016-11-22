@@ -42,8 +42,8 @@ class TestVersionedServiceControllers(base.AIOServiceBase):
             self.generate_valid_controller(c_name_two, "v1")
         )
         with base.web_service(
-                self, versioned_controllers=
-                [c_class_one, c_class_two]) as test_client:
+                self, versioned_controllers=[
+                    c_class_one, c_class_two]) as test_client:
             _, status_1 = self.testloop.run_until_complete(
                 test_client.get_some_key("/v1/{}".format(c_name_one)))
             _, status_2 = self.testloop.run_until_complete(
@@ -60,8 +60,8 @@ class TestVersionedServiceControllers(base.AIOServiceBase):
 
         def should_raise():
             with base.web_service(
-                    self, versioned_controllers=
-                    [c_class_one, c_class_two]):
+                    self, versioned_controllers=[
+                        c_class_one, c_class_two]):
                 pass
 
         ex = self.assertRaises(Exception, should_raise)
