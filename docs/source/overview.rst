@@ -17,8 +17,8 @@ AIOService: HTTP
 ----------------
 
 AIOService.HTTP contains set of routines to build HTTP web services with nested versioned API controllers.
-It has:
+It has::
 
-* Root HTTP service
-* Versioned sub-services
-* Request controller handlers routines
+    Root HTTP service
+    Versioned sub-services
+    Request controller handlers routines

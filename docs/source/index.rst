@@ -11,8 +11,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   overview.md
-   HOW-TO.md
+   overview.rst
+   how-to.rst
 
 
 
