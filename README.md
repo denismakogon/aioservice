@@ -1,4 +1,5 @@
 [![Documentation Status](https://readthedocs.org/projects/aioservice/badge/?version=latest)](http://aioservice.readthedocs.io/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.org/denismakogon/aioservice.svg?branch=master)](https://travis-ci.org/denismakogon/aioservice)
 
 AIOService
 ==========
