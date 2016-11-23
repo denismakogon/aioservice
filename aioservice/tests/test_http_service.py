@@ -13,12 +13,15 @@
 #    under the License.
 
 from aioservice.tests import base
+from aioservice.tests import controllers
 
 
 class TestHTTPService(base.AIOServiceBase):
 
     def test_can_do_get_on_service(self):
-        with base.web_service(self) as test_client:
+        with base.web_service(self, versioned_controllers=[
+                controllers.TestController], middleware=[
+                base.content_type_validator]) as test_client:
             some_key = "some_key"
             json, status = self.testloop.run_until_complete(
                 test_client.get_some_key("/v1/{}".format(some_key)))

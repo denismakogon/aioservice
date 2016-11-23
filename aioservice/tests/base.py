@@ -20,7 +20,6 @@ from aiohttp import test_utils
 from aiohttp import web
 
 from aioservice.http import service
-from aioservice.tests import controllers
 
 
 async def content_type_validator(app: web.Application, handler):
@@ -51,13 +50,13 @@ class AIOHTTPClient(test_utils.TestClient):
 
 
 @contextlib.contextmanager
-def web_service(test_class_instance, versioned_controllers=None):
-    if not versioned_controllers:
-        versioned_controllers = [controllers.TestController]
+def web_service(test_class_instance,
+                versioned_controllers=None,
+                middleware=None):
 
     sub_app = service.VersionedService(
-        versioned_controllers,
-        middleware=[content_type_validator])
+        controllers=versioned_controllers,
+        middleware=middleware)
 
     main_app = service.HTTPService(
         subservice_definitions=[sub_app],

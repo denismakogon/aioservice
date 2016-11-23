@@ -67,3 +67,14 @@ class TestVersionedServiceControllers(base.AIOServiceBase):
         ex = self.assertRaises(Exception, should_raise)
         self.assertIn("not all controllers are pinned "
                       "to the same API version.", str(ex))
+
+    def test_can_create_versioned_service_with_no_controllers(self):
+        with base.web_service(self, middleware=[
+                base.content_type_validator, ]) as test_client:
+            self.assertIsNotNone(test_client)
+
+    def test_can_create_versioned_service_with_no_middleware(self):
+        with base.web_service(self, versioned_controllers=[
+                self.generate_valid_controller(
+                    "test_controller", "v1"), ]) as test_client:
+            self.assertIsNotNone(test_client)

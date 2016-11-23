@@ -22,44 +22,50 @@ from aioservice.common import logger as log
 
 class VersionedService(object):
 
-    def __init__(self, controllers: typing.List,
+    def __init__(self, controllers: typing.List=None,
                  middleware: typing.List=None):
-        self.controllers = controllers
-        self.middleware = middleware
+        self.controllers = controllers if controllers and isinstance(
+            controllers, list) else []
+        self.middleware = middleware if middleware and isinstance(
+            middleware, list) else []
         self.validate_controllers()
         self.validate_middleware()
 
     def validate_controllers(self):
-        api_version = set([controller.version
-                           for controller in self.controllers])
-        if len(api_version) != 1:
-            raise Exception("Unable to discover common API version "
-                            "from controllers, not all controllers "
-                            "are pinned to the same API version.")
-        return api_version
+        if self.controllers:
+            api_version = set([controller.version
+                               for controller in self.controllers])
+            if len(api_version) != 1:
+                raise Exception("Unable to discover common API version "
+                                "from controllers, not all controllers "
+                                "are pinned to the same API version.")
+            return api_version
 
     def validate_middleware(self):
-        all_cors = [asyncio.iscoroutinefunction(middleware)
-                    for middleware in self.middleware]
-        if len(set(all_cors)) != 1:
-            raise Exception("Middleware functions "
-                            "should be a coroutines.")
+        if self.middleware:
+            all_cors = [asyncio.iscoroutinefunction(middleware)
+                        for middleware in self.middleware]
+            if len(set(all_cors)) != 1:
+                raise Exception("Middleware functions "
+                                "should be a coroutines.")
 
     @property
     def api_version(self):
-        api_versions = self.validate_controllers()
-        return list(api_versions).pop()
+        if self.validate_controllers():
+            api_versions = self.validate_controllers()
+            return list(api_versions).pop()
 
     def bind_to_service(self, service):
-        api, controllers = self.api_version, self.controllers
-        sub_service_app = web.Application(
-            logger=service.logger,
-            loop=service.event_loop,
-            middlewares=self.middleware)
-        for c in controllers:
-            c(sub_service_app)
-        service.root.router.add_subapp(
-            "/{}/".format(api), sub_service_app)
+        if self.validate_controllers():
+            api, controllers = self.api_version, self.controllers
+            sub_service_app = web.Application(
+                logger=service.logger,
+                loop=service.event_loop,
+                middlewares=self.middleware)
+            for c in controllers:
+                c(sub_service_app)
+            service.root.router.add_subapp(
+                "/{}/".format(api), sub_service_app)
 
 
 class HTTPService(object):
