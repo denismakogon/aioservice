@@ -21,7 +21,7 @@ def read(fname):
 
 setuptools.setup(
     name='aioservice',
-    version='0.0.1',
+    version='0.0.2',
     description='Library to provide HTTP advanced service building',
     long_description=read('README.md'),
     url='https://aioservice.readthedocs.org',
@@ -29,7 +29,7 @@ setuptools.setup(
     author_email='lildee1991@gmail.com',
     packages=setuptools.find_packages(),
     install_requires=[
-        "aiohttp==1.1.5",
+        "aiohttp>=1.1.5",
     ],
     license='License :: OSI Approved :: Apache Software License',
     classifiers=[
