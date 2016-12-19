@@ -21,7 +21,7 @@ def read(fname):
 
 setuptools.setup(
     name='aioservice',
-    version='0.0.2',
+    version='0.0.3',
     description='Library to provide HTTP advanced service building',
     long_description=read('README.md'),
     url='https://aioservice.readthedocs.org',
