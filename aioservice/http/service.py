@@ -23,13 +23,23 @@ from aioservice.common import logger as log
 class VersionedService(object):
 
     def __init__(self, controllers: typing.List=None,
-                 middleware: typing.List=None):
+                 middleware: typing.List=None,
+                 service_hooks: typing.List = None):
         self.controllers = controllers if controllers and isinstance(
             controllers, list) else []
         self.middleware = middleware if middleware and isinstance(
             middleware, list) else []
+        self.service_hooks = service_hooks if service_hooks and isinstance(
+            service_hooks, list) else []
+
         self.validate_controllers()
         self.validate_middleware()
+        self.validate_service_hooks()
+
+    def validate_service_hooks(self):
+        if self.service_hooks:
+            if not all([callable(hook) for hook in self.service_hooks]):
+                raise Exception("All service hooks must be callable.")
 
     def validate_controllers(self):
         if self.controllers:
@@ -64,6 +74,8 @@ class VersionedService(object):
                 middlewares=self.middleware)
             for c in controllers:
                 c(sub_service_app)
+            for hook in self.service_hooks:
+                hook(sub_service_app)
             service.root.router.add_subapp(
                 "/{}/".format(api), sub_service_app)
 
