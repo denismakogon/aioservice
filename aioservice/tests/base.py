@@ -40,8 +40,8 @@ async def content_type_validator(app: web.Application, handler):
 
 class AIOHTTPClient(test_utils.TestClient):
 
-    def __init__(self, http_service):
-        super(AIOHTTPClient, self).__init__(http_service)
+    def __init__(self, http_service, loop=None):
+        super(AIOHTTPClient, self).__init__(http_service, loop=loop)
 
     async def get_some_key(self, route, headers=None):
         resp = await self.get(route, headers=headers)
@@ -63,7 +63,7 @@ def web_service(test_class_instance,
         event_loop=test_class_instance.testloop)
 
     test_client = AIOHTTPClient(
-        main_app.root)
+        main_app.root, loop=test_class_instance.testloop)
 
     test_class_instance.testloop.run_until_complete(
         test_client.start_server())

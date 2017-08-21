@@ -76,7 +76,7 @@ class VersionedService(object):
                 c(sub_service_app)
             for hook in self.service_hooks:
                 hook(sub_service_app)
-            service.root.router.add_subapp(
+            service.root.add_subapp(
                 "/{}/".format(api), sub_service_app)
 
 
